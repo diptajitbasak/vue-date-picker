@@ -1,10 +1,9 @@
 <template lang="pug">
   .minute-chooser
-    .current-time {{ scopedMinute }}
-    .dot
+    .current-time(@click='setCurrentTime') {{ scopedMinute }}
     .numbers
       .minute(v-for="i in 12")
-        span(:class="{selected: (i * 5) === scopedMinute}") {{ i * 5 }}
+         span(:class="{selected: (5 * (i - 1)) === scopedMinute || (5 * (i - 1)) === scopedMinute - (scopedMinute % 5)}",  @click="setMinute(5 * (i- 1))") {{ (5 * (i - 1)) }}
 </template>
 
 <script>
@@ -37,27 +36,35 @@ export default {
   },
   destroyed () {
     this.$el.removeEventListener('wheel', null)
+  },
+  methods: {
+    setMinute (value) {
+      this.$emit('set-minute', value)
+    },
+    setCurrentTime () {
+      console.log('hello')
+    }
   }
 }
 </script>
 
 <style lang="sass" scoped>
+$radius: 100px
 .minute-chooser
   position: relative
   .current-time
     position: absolute
-    height: 100px
-    transform: translateY(100%)
+    transform: translateY($radius) translate(-50%, -50%)
   .numbers
     .minute
-      height: 100px
+      height: $radius
       position: absolute
       top: 0
       left: 0
       transform-origin: 0 100%
       @for $minute from 1 through 12
         &:nth-child(#{$minute})
-          transform: rotate(#{30 * $minute}deg)
+          transform: rotate(#{30 * ($minute - 1)}deg)
       .selected
         position: relative
         background: blue

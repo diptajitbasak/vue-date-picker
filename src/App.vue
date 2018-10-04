@@ -1,15 +1,18 @@
 <template lang="pug">
   #app
-    date-picker(:options="{chooser:['month', 'day']}")
+    //- custom-input
+    date-picker(:options="{chooser:['hour']}")
 </template>
 
 <script>
 import DatePicker from './components/DatePicker'
+// import CustomInput from './components/CustomInput'
 
 export default {
   name: 'app',
   components: {
     DatePicker
+    // CustomInput
   }
 }
 </script>

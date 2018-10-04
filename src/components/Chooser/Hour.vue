@@ -3,7 +3,7 @@
     .current-time {{ scopedHour }}
     .numbers
       .hour(v-for="i in 24")
-        span(:class="{selected: (i - 1) === scopedHour}") {{ i - 1 }}
+        span(:class="{selected: (i - 1) === scopedHour}", @click="setHour( i- 1 )") {{ i - 1 }}
 </template>
 
 <script>
@@ -15,6 +15,11 @@ export default {
   data () {
     return {
       scopedHour: this.hour
+    }
+  },
+  methods: {
+    setHour (value) {
+      this.$emit('set-hour', value)
     }
   },
   mounted () {
@@ -42,15 +47,15 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+$radius: 100px
 .hour-chooser
   position: relative
   .current-time
     position: absolute
-    height: 100px
-    transform: translateY(100%)
+    transform: translateY($radius) translate(-50%, -50%)
   .numbers
     .hour
-      height: 100px
+      height: $radius
       position: absolute
       top: 0
       left: 0

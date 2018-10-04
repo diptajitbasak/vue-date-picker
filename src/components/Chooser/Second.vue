@@ -1,10 +1,9 @@
 <template lang="pug">
   .second-chooser
     .current-time {{ scopedSecond }}
-    .dot
     .numbers
       .second(v-for="i in 12")
-        span(:class="{selected: (i * 5) === scopedSecond || (i * 5) < scopedSecond}") {{ i * 5 }}
+        span(:class="{selected: (5 * (i - 1)) === scopedSecond || (5 * (i - 1)) === scopedSecond - (scopedSecond % 5)}",  @click="setSecond(5 * (i- 1))") {{ (5 * (i - 1)) }}
 </template>
 
 <script>
@@ -37,32 +36,32 @@ export default {
   },
   destroyed () {
     this.$el.removeEventListener('wheel', null)
+  },
+  methods: {
+    setSecond (value) {
+      this.$emit('set-second', value)
+    }
   }
 }
 </script>
 
 <style lang="sass" scoped>
+$radius: 100px
 .second-chooser
   position: relative
   .current-time
     position: absolute
-    height: 100px
-    transform: translateY(100%)
-  .dot
-    height: 100px
-    width: 100px
-    border-radius: 100%
-    color: #000
+    transform: translateY($radius) translate(-50%, -50%)
   .numbers
     .second
-      height: 100px
+      height: $radius
       position: absolute
       top: 0
       left: 0
       transform-origin: 0 100%
       @for $second from 1 through 12
         &:nth-child(#{$second})
-          transform: rotate(#{30 * $second}deg)
+          transform: rotate(#{30 * ($second - 1)}deg)
       .selected
         position: relative
         background: blue
