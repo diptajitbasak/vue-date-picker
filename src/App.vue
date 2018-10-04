@@ -1,7 +1,7 @@
 <template lang="pug">
   #app
     //- custom-input
-    date-picker(:options="{chooser:['hour']}")
+    date-picker(:options="{chooser:['year', 'month', 'day'], range: true}")
 </template>
 
 <script>

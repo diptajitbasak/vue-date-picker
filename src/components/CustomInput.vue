@@ -1,12 +1,16 @@
 <template lang="pug">
-    div
-     input(type="text" name="name" class="search" id="nme" required autocomplete="off")
-     label(for="nme")
-        span Testing
+  .input
+    input(v-model="value" type="text" class="search" required autocomplete="off")
+    label
+      span {{ label }}
 </template>
 
 <script>
 export default {
+  props: {
+    value: String,
+    label: String
+  }
 }
 </script>
 
