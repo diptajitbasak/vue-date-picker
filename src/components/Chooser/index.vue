@@ -7,11 +7,11 @@
     template(v-if="options.chooser.includes('year')")
       year(:year.sync="time.year")
     template(v-if="options.chooser.includes('hour')")
-      hour(:hour.sync="time.hour")
+      hour(class="hour" :hour.sync="time.hour")
     template(v-if="options.chooser.includes('minute')")
-      minute(:minute.sync="time.minute")
+      minute(class="minute" :minute.sync="time.minute")
     template(v-if="options.chooser.includes('second')")
-      second(:second.sync="time.second")
+      second(class="second" :second.sync="time.second")
 </template>
 
 <script>
@@ -25,7 +25,7 @@ import second from './Second'
 export default {
   props: {
     options: Object,
-    time: Object,
+    time: Object
   },
   components: {
     Day,

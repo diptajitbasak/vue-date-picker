@@ -5,7 +5,7 @@
         tr
           th(v-for="day in days") {{ day | singleCharacter }}
         tr(v-for="week in (monthCalendar.length / 7)")
-          td(v-for="day in 7") {{ monthCalendar[(week - 1) * 7 + day - 1] | doubleCharacter }}
+          td(v-for="day in 7" @click="updateDay(monthCalendar[(week - 1) * 7 + day - 1])") {{ monthCalendar[(week - 1) * 7 + day - 1] | doubleCharacter }}
 </template>
 
 <script>
@@ -18,6 +18,11 @@ export default {
   data () {
     return {
       days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    }
+  },
+  methods: {
+    updateDay (value) {
+      this.$emit('update:day', value)
     }
   },
   computed: {

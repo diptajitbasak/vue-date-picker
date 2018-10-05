@@ -1,8 +1,8 @@
 <template lang="pug">
   .date-picker
-    custom-input(:value="formattedValue")
-    chooser(:options="options" :time="start")
-    chooser(v-if="options.range" :options="options" :time="end")
+    custom-input(class='input' :value="formattedValue")
+    chooser(class='chooser-1' :options="options" :time="start")
+    chooser(class='chooser-2' v-if="options.range" :options="options" :time="end")
 </template>
 
 <script>
@@ -42,11 +42,24 @@ export default {
   computed: {
     formattedValue () {
       // Fill this up
-      return ''
+      let startDay = this.start.day
+      let startMonth = this.start.month
+      let startYear = this.start.year
+      return `${startDay}/${startMonth}/${startYear}`
     }
   }
 }
 </script>
 
 <style lang="sass" scoped>
+.date-picker
+  display: grid
+  grid-template-column: 1fr 1fr
+  grid-gap: 10px
+  .input
+    grid-column: 1/3
+  .chooser-1
+    grid-column: 1
+  .chooser-2
+    grid-column: 2
 </style>
