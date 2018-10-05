@@ -5,26 +5,15 @@
 </template>
 
 <script>
+import { months } from '../constants'
+
 export default {
   props: {
     month: Number
   },
   data () {
     return {
-      months: [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-      ],
+      months: months,
       scopedMonth: this.month
     }
   },

@@ -32,3 +32,15 @@ export function getMonthCalendar (month, year) {
   calendar = calendar.concat(Array(7 - (calendar.length % 7)).fill(0).map((element, index) => index + 1))
   return calendar
 }
+
+export function format (target, substitute, length, isPrefix = true) {
+  let targetString = String(target)
+  if (length < targetString.length) {
+    return targetString
+  }
+  let substitution = Array((length - targetString.length) / substitute.length).fill(substitute).join('')
+  if (isPrefix) {
+    return substitution + targetString
+  }
+  return targetString + substitution
+}

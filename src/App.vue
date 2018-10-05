@@ -1,6 +1,6 @@
 <template lang="pug">
   #app
-    date-picker(:options="{chooser:['day', 'month', 'year'], range: true}")
+    date-picker(:options="{chooser:['day', 'month', 'year'], range: true, label: 'Pick a Date Range'}")
 </template>
 
 <script>

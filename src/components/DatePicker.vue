@@ -1,6 +1,6 @@
 <template lang="pug">
   .date-picker
-    custom-input(class='input' :value="formattedValue")
+    custom-input(class='input' :value="formattedValue" :label="options.label")
     chooser(class='chooser-1' :options="options" :time="start")
     chooser(class='chooser-2' v-if="options.range" :options="options" :time="end")
 </template>
@@ -8,6 +8,8 @@
 <script>
 import CustomInput from './CustomInput'
 import Chooser from './Chooser'
+
+import { format } from './helper'
 
 const now = new Date()
 
@@ -41,11 +43,26 @@ export default {
   },
   computed: {
     formattedValue () {
-      // Fill this up
-      let startDay = this.start.day
-      let startMonth = this.start.month
-      let startYear = this.start.year
-      return `${startDay}/${startMonth}/${startYear}`
+      const dateOptions = ['day', 'month', 'year'].filter(e => this.options.chooser.includes(e))
+      const timeOptions = ['hour', 'minute', 'second'].filter(e => this.options.chooser.includes(e))
+
+      const startDate = dateOptions
+        .map(e => (e === 'month') ? (this.start[e] + 1) : this.start[e])
+        .map(e => format(e, '0', 2))
+        .join('/')
+      const startTime = timeOptions.map(e => format(this.start[e], '0', 2)).join(':')
+
+      if (!this.options.range) {
+        return `${startDate} ${startTime}`
+      }
+
+      const endDate = dateOptions
+        .map(e => (e === 'month') ? (this.end[e] + 1) : this.end[e])
+        .map(e => format(e, '0', 2))
+        .join('/')
+      const endTime = timeOptions.map(e => format(this.end[e], '0', 2)).join(':')
+
+      return `${startDate} ${startTime} - ${endDate} ${endTime}`
     }
   }
 }

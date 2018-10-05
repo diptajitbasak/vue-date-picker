@@ -9,16 +9,18 @@
 </template>
 
 <script>
-import { getMonthCalendar } from './helper'
+import { getMonthCalendar } from '../helper'
+import { days } from '../constants'
+
 export default {
+  data () {
+    return {
+      days: days
+    }
+  },
   props: {
     month: Number,
     year: Number
-  },
-  data () {
-    return {
-      days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-    }
   },
   methods: {
     updateDay (value) {
