@@ -1,9 +1,10 @@
 <template lang="pug">
-  .second-chooser
-    .current-time {{ scopedSecond }}
-    .numbers
-      .second(v-for="i in 12")
-        span(:class="{selected: (5 * (i - 1)) === scopedSecond || (5 * (i - 1)) === scopedSecond - (scopedSecond % 5)}",  @click="setSecond(5 * (i- 1))") {{ (5 * (i - 1)) }}
+  div(class="second-picker")
+    .second-chooser
+      .current-time {{ scopedSecond }}
+      .numbers
+        .second(v-for="i in 12")
+          span(:class="{selected: (5 * (i - 1)) === scopedSecond || (5 * (i - 1)) === scopedSecond - (scopedSecond % 5)}",  @click="setSecond(5 * (i- 1))") {{ (5 * (i - 1)) }}
 </template>
 
 <script>
@@ -47,23 +48,25 @@ export default {
 
 <style lang="sass" scoped>
 $radius: 100px
-.second-chooser
-  position: relative
-  .current-time
-    position: absolute
-    transform: translateY($radius) translate(-50%, -50%)
-  .numbers
-    .second
-      height: $radius
+.second-picker
+  height: 210px
+  .second-chooser
+    position: relative
+    .current-time
       position: absolute
-      top: 0
-      left: 0
-      transform-origin: 0 100%
-      @for $second from 1 through 12
-        &:nth-child(#{$second})
-          transform: rotate(#{30 * ($second - 1)}deg)
-      .selected
-        position: relative
-        background: blue
-        color: white
+      transform: translateY($radius) translate(-50%, -50%)
+    .numbers
+      .second
+        height: $radius
+        position: absolute
+        top: 0
+        left: 0
+        transform-origin: 0 100%
+        @for $second from 1 through 12
+          &:nth-child(#{$second})
+            transform: rotate(#{30 * ($second - 1)}deg)
+        .selected
+          position: relative
+          background: blue
+          color: white
 </style>

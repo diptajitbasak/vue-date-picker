@@ -1,9 +1,10 @@
 <template lang="pug">
-  .hour-chooser
-    .current-time {{ scopedHour }}
-    .numbers
-      .hour(v-for="i in 24")
-        span(:class="{selected: (i - 1) === scopedHour}", @click="setHour( i- 1 )") {{ i - 1 }}
+  div(class="hour-picker")
+    .hour-chooser
+      .current-time {{ scopedHour }}
+      .numbers
+        .hour(v-for="i in 24")
+          span(:class="{selected: (i - 1) === scopedHour}", @click="setHour( i- 1 )") {{ i - 1 }}
 </template>
 
 <script>
@@ -48,23 +49,25 @@ export default {
 
 <style lang="sass" scoped>
 $radius: 100px
-.hour-chooser
-  position: relative
-  .current-time
-    position: absolute
-    transform: translateY($radius) translate(-50%, -50%)
-  .numbers
-    .hour
-      height: $radius
+.hour-picker
+  height: 210px
+  .hour-chooser
+    position: relative
+    .current-time
       position: absolute
-      top: 0
-      left: 0
-      transform-origin: 0 100%
-      @for $hour from 1 through 24
-        &:nth-child(#{$hour})
-          transform: rotate(#{15 * ($hour - 1)}deg)
-      .selected
-        position: relative
-        background: blue
-        color: white
+      transform: translateY($radius) translate(-50%, -50%)
+    .numbers
+      .hour
+        height: $radius
+        position: absolute
+        top: 0
+        left: 0
+        transform-origin: 0 100%
+        @for $hour from 1 through 24
+          &:nth-child(#{$hour})
+            transform: rotate(#{15 * ($hour - 1)}deg)
+        .selected
+          position: relative
+          background: blue
+          color: white
 </style>

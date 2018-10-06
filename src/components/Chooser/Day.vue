@@ -1,11 +1,10 @@
 <template lang="pug">
-  div
-    .day-chooser
-      table
-        tr
-          th(v-for="day in days") {{ day | singleCharacter }}
-        tr(v-for="week in (monthCalendar.length / 7)")
-          td(v-for="day in 7" @click="updateDay(monthCalendar[(week - 1) * 7 + day - 1])") {{ monthCalendar[(week - 1) * 7 + day - 1] | doubleCharacter }}
+  .day-chooser
+    table
+      tr
+        th(v-for="day in days") {{ day | singleCharacter }}
+      tr(v-for="week in (monthCalendar.length / 7)")
+        td(v-for="day in 7" @click="updateDay(monthCalendar[(week - 1) * 7 + day - 1])" class="yellow" :class="{blue: (week === 1 && monthCalendar[day - 1] > 20) || ((monthCalendar.length / 7) === week && monthCalendar[(week - 1) * 7 + day - 1] < 20), red: day === 7 || day === 1}") {{ monthCalendar[(week - 1) * 7 + day - 1] | doubleCharacter }}
 </template>
 
 <script>
@@ -15,15 +14,18 @@ import { days } from '../constants'
 export default {
   data () {
     return {
-      days: days
+      days: days,
+      scopedDay: this.day
     }
   },
   props: {
+    day: Number,
     month: Number,
     year: Number
   },
   methods: {
     updateDay (value) {
+      this.scopedDay = value
       this.$emit('update:day', value)
     }
   },
@@ -49,4 +51,10 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.yellow
+  background: yellow
+.red
+  color: red
+.blue
+  color: blue
 </style>

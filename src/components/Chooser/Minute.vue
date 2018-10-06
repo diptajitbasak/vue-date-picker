@@ -1,9 +1,10 @@
 <template lang="pug">
-  .minute-chooser
-    .current-time(@click='setCurrentTime') {{ scopedMinute }}
-    .numbers
-      .minute(v-for="i in 12")
-         span(:class="{selected: (5 * (i - 1)) === scopedMinute || (5 * (i - 1)) === scopedMinute - (scopedMinute % 5)}",  @click="setMinute(5 * (i- 1))") {{ (5 * (i - 1)) }}
+  div(class="minute-picker")
+    .minute-chooser
+      .current-time(@click='setCurrentTime') {{ scopedMinute }}
+      .numbers
+        .minute(v-for="i in 12")
+          span(:class="{selected: (5 * (i - 1)) === scopedMinute || (5 * (i - 1)) === scopedMinute - (scopedMinute % 5)}",  @click="setMinute(5 * (i- 1))") {{ (5 * (i - 1)) }}
 </template>
 
 <script>
@@ -50,23 +51,25 @@ export default {
 
 <style lang="sass" scoped>
 $radius: 100px
-.minute-chooser
-  position: relative
-  .current-time
-    position: absolute
-    transform: translateY($radius) translate(-50%, -50%)
-  .numbers
-    .minute
-      height: $radius
+.minute-picker
+  height: 210px
+  .minute-chooser
+    position: relative
+    .current-time
       position: absolute
-      top: 0
-      left: 0
-      transform-origin: 0 100%
-      @for $minute from 1 through 12
-        &:nth-child(#{$minute})
-          transform: rotate(#{30 * ($minute - 1)}deg)
-      .selected
-        position: relative
-        background: blue
-        color: white
+      transform: translateY($radius) translate(-50%, -50%)
+    .numbers
+      .minute
+        height: $radius
+        position: absolute
+        top: 0
+        left: 0
+        transform-origin: 0 100%
+        @for $minute from 1 through 12
+          &:nth-child(#{$minute})
+            transform: rotate(#{30 * ($minute - 1)}deg)
+        .selected
+          position: relative
+          background: blue
+          color: white
 </style>
