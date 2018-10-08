@@ -1,7 +1,7 @@
 <template lang="pug">
   .year-chooser
     ul
-      li(v-for="i in 9") {{ scopedYear + i - 1 }}
+      li(v-for="i in 9" @click='setYear(scopedYear + i - 1)') {{ scopedYear + i - 1 }}
 </template>
 
 <script>
@@ -12,6 +12,12 @@ export default {
   data () {
     return {
       scopedYear: this.year
+    }
+  },
+  methods: {
+    setYear (value) {
+      this.scopedYear = value
+      this.$emit('update:year', this.scopedYear)
     }
   },
   mounted () {

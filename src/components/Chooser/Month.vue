@@ -1,7 +1,7 @@
 <template lang="pug">
   .month-chooser
     ul
-      li(v-for="i in 7") {{ months[(scopedMonth + i - 1) % 12] }}
+      li(v-for="i in 7" @click="setMonth((scopedMonth + i - 1) % 12)") {{ months[(scopedMonth + i - 1) % 12] }}
 </template>
 
 <script>
@@ -15,6 +15,12 @@ export default {
     return {
       months: months,
       scopedMonth: this.month
+    }
+  },
+  methods: {
+    setMonth (value) {
+      this.scopedMonth = value
+      this.$emit('update:month', this.scopedMonth)
     }
   },
   mounted () {
