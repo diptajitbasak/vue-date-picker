@@ -1,7 +1,7 @@
 <template lang="pug">
   div(class="minute-picker")
     .minute-chooser
-      .current-time(@click='setCurrentTime') {{ scopedMinute }}
+      .current-time {{ scopedMinute }}
       .numbers
         .minute(v-for="i in 12")
           span(:class="{selected: (5 * (i - 1)) === scopedMinute || (5 * (i - 1)) === scopedMinute - (scopedMinute % 5)}",  @click="setMinute(5 * (i- 1))") {{ (5 * (i - 1)) }}
@@ -15,6 +15,12 @@ export default {
   data () {
     return {
       scopedMinute: this.minute
+    }
+  },
+  methods: {
+    setMinute (value) {
+      this.scopedMinute = value
+      this.$emit('update:minute', this.scopedMinute)
     }
   },
   mounted () {
@@ -37,14 +43,6 @@ export default {
   },
   destroyed () {
     this.$el.removeEventListener('wheel', null)
-  },
-  methods: {
-    setMinute (value) {
-      this.$emit('set-minute', value)
-    },
-    setCurrentTime () {
-      console.log('hello')
-    }
   }
 }
 </script>
@@ -53,6 +51,7 @@ export default {
 $radius: 100px
 .minute-picker
   height: 210px
+  width: 200px
   .minute-chooser
     position: relative
     .current-time

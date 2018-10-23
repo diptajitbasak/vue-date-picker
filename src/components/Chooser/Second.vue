@@ -17,6 +17,12 @@ export default {
       scopedSecond: this.second
     }
   },
+  methods: {
+    setSecond (value) {
+      this.scopedSecond = value
+      this.$emit('update:second', this.scopedSecond)
+    }
+  },
   mounted () {
     this.$el.addEventListener('wheel', (event) => {
       if (event.deltaY > 0) {
@@ -37,11 +43,6 @@ export default {
   },
   destroyed () {
     this.$el.removeEventListener('wheel', null)
-  },
-  methods: {
-    setSecond (value) {
-      this.$emit('set-second', value)
-    }
   }
 }
 </script>
@@ -50,6 +51,7 @@ export default {
 $radius: 100px
 .second-picker
   height: 210px
+  width: 200px
   .second-chooser
     position: relative
     .current-time

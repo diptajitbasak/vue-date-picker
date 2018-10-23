@@ -20,7 +20,8 @@ export default {
   },
   methods: {
     setHour (value) {
-      this.$emit('set-hour', value)
+      this.scopedHour = value
+      this.$emit('update:hour', this.scopedHour)
     }
   },
   mounted () {
@@ -51,6 +52,7 @@ export default {
 $radius: 100px
 .hour-picker
   height: 210px
+  width: 200px
   .hour-chooser
     position: relative
     .current-time
