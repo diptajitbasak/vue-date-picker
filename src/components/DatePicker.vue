@@ -1,6 +1,7 @@
 <template lang="pug">
   .date-picker
     custom-input(class='input' :value="formattedValue" :label="options.label")
+    quick-pick(class='quick-pick' v-if="options.quickPick" :timeStart="start" :timeEnd="end")
     chooser(class='chooser-1' :options="options" :time="start")
     chooser(class='chooser-2' v-if="options.range" :options="options" :time="end")
 </template>
@@ -8,6 +9,7 @@
 <script>
 import CustomInput from './CustomInput'
 import Chooser from './Chooser'
+import QuickPick from './QuickPick'
 
 import { format } from './helper'
 
@@ -19,7 +21,8 @@ export default {
   },
   components: {
     CustomInput,
-    Chooser
+    Chooser,
+    QuickPick
   },
   data () {
     return {
@@ -71,10 +74,12 @@ export default {
 <style lang="sass" scoped>
 .date-picker
   display: grid
-  grid-template-column: 1fr 1fr
+  grid-template-column: 1fr 1fr 1fr
   grid-gap: 10px
   .input
     grid-column: 1/3
+  .quick-pick
+    grid-column: 3/4
   .chooser-1
     grid-column: 1
   .chooser-2
