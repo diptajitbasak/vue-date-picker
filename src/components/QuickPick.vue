@@ -1,10 +1,14 @@
 <template lang="pug">
   div(class="icon" @click="openDropdown = !openDropdown") Q
     div(class="dropdown" v-if="openDropdown")
-      div(class="item" @click="setLastMonth") last Month
+      div(@click="setLastMonth") Last Month
+      div(@click="setYesterday") Yesterday
+      div(@click="setTomorrow") Tomorrow
 </template>
 
 <script>
+import { getMonthCalendar } from './helper'
+
 export default {
   props: {
     timeStart: Object,
@@ -18,8 +22,22 @@ export default {
     }
   },
   methods: {
+    setYesterday () {
+      // console.log(this.scopedTimeStart.day)
+    },
+    setTomorrow () {
+      let daysInMonth = getMonthCalendar(this.scopedTimeStart.month, this.scopedTimeStart.year)
+      this.scopedTimeStart.day = this.scopedTimeStart.day + 1
+    },
     setLastMonth () {
-      this.scopedTimeStart.month = this.scopedTimeStart.month - 1
+      if (this.scopedTimeStart.month === 0) {
+        this.scopedTimeStart.month = 11
+        this.scopedTimeStart.year = this.scopedTimeStart.year - 1
+      } else {
+        this.scopedTimeStart.month = this.scopedTimeStart.month - 1
+      }
+      console.log(this.scopedTimeStart.month)
+      console.log(this.scopedTimeStart.year)
       this.$emit('update:month', this.scopedTimeStart.month)
     }
   }
