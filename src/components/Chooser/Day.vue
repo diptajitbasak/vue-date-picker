@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { eventBus } from '../../main'
 import { getMonthCalendar } from '../helper'
 import { days } from '../constants'
 
@@ -15,7 +16,8 @@ export default {
   data () {
     return {
       days: days,
-      scopedDay: this.day
+      scopedDay: this.day,
+      scopedMonth: this.month
     }
   },
   props: {
@@ -26,12 +28,19 @@ export default {
   methods: {
     updateDay (value, week) {
       if (week === 1 && value > 20) {
-        this.$emit('previous:month', value)
+        this.scopedDay = value
+        // console.log(this.scopedMonth)
+        this.scopedMonth = this.scopedMonth - 1
+        eventBus.$emit('update:day', value)
+        eventBus.$emit('update:month', this.scopedMonth)
       } else if ((week === 5 && value < 20) || (week === 6 && value < 20)) {
-        this.$emit('next:month', value)
+        // console.log(this.scopedMonth)
+        this.scopedMonth = this.scopedMonth + 1
+        eventBus.$emit('update:month', this.scopedMonth)
+        eventBus.$emit('update:day', value)
       } else {
         this.scopedDay = value
-        this.$emit('update:day', value)
+        eventBus.$emit('update:day', value)
       }
     }
   },

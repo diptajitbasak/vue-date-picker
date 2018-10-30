@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { eventBus } from '../main'
 import CustomInput from './CustomInput'
 import Chooser from './Chooser'
 import QuickPick from './QuickPick'
@@ -43,6 +44,20 @@ export default {
         second: now.getSeconds()
       }
     }
+  },
+  created() {
+    eventBus.$on('update:day', (value) => {
+      console.log('day is',value)
+      this.start.day = value
+    }),
+    eventBus.$on('update:month', (value) => {
+      console.log('month is',value)
+      this.start.month = value
+    }),
+    eventBus.$on('update:year', (value) => {
+      console.log(value)
+      this.start.year = value
+    })
   },
   computed: {
     formattedValue () {

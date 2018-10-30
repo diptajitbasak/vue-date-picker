@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { eventBus } from '../../main'
 import { months } from '../constants'
 
 export default {
@@ -20,7 +21,7 @@ export default {
   methods: {
     setMonth (value) {
       this.scopedMonth = value
-      this.$emit('update:month', this.scopedMonth)
+      eventBus.$emit('update:month', this.scopedMonth)
     }
   },
   mounted () {
@@ -30,7 +31,7 @@ export default {
       } else {
         this.scopedMonth = (this.scopedMonth + 11) % 12
       }
-      this.$emit('update:month', this.scopedMonth)
+      eventBus.$emit('update:month', this.scopedMonth)
     })
   },
   destroyed () {

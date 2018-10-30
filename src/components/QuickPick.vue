@@ -27,7 +27,7 @@ export default {
     },
     setTomorrow () {
       let daysInMonth = getMonthCalendar(this.scopedTimeStart.month, this.scopedTimeStart.year)
-      this.scopedTimeStart.day = this.scopedTimeStart.day + 1
+      console.log(daysInMonth)
     },
     setLastMonth () {
       if (this.scopedTimeStart.month === 0) {

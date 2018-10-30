@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import { eventBus } from '../../main'
+
 export default {
   props: {
     year: Number
@@ -17,7 +19,7 @@ export default {
   methods: {
     setYear (value) {
       this.scopedYear = value
-      this.$emit('update:year', this.scopedYear)
+      eventBus.$emit('update:year', this.scopedYear)
     }
   },
   mounted () {
@@ -27,7 +29,7 @@ export default {
       } else {
         this.scopedYear -= 1
       }
-      this.$emit('update:year', this.scopedYear)
+      eventBus.$emit('update:year', this.scopedYear)
     })
   },
   destroyed () {

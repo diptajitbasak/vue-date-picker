@@ -4,6 +4,8 @@ import pL from 'professional-look/dist/css/main.css'
 import fontAwesome from 'font-awesome/css/font-awesome.css'
 import vuewheel from 'vuewheel'
 
+export const eventBus = new Vue()
+
 Vue.config.productionTip = false
 Vue.use(vuewheel)
 Vue.use(pL)
