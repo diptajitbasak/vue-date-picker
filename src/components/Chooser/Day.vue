@@ -25,22 +25,37 @@ export default {
     month: Number,
     year: Number
   },
+  created() {
+    eventBus.$on('update:day', (value) => {
+      this.scopedDay = value
+    }),
+    eventBus.$on('update:month', (value) => {
+      this.scopedMonth = value
+    })
+  },
   methods: {
     updateDay (value, week) {
       if (week === 1 && value > 20) {
         this.scopedDay = value
-        // console.log(this.scopedMonth)
-        this.scopedMonth = this.scopedMonth - 1
-        eventBus.$emit('update:day', value)
+        if (this.scopedMonth === 0) {
+          this.scopedMonth = 11
+        } else {
+          this.scopedMonth = this.scopedMonth - 1
+        }
+        eventBus.$emit('update:day', this.scopedDay)
         eventBus.$emit('update:month', this.scopedMonth)
       } else if ((week === 5 && value < 20) || (week === 6 && value < 20)) {
-        // console.log(this.scopedMonth)
-        this.scopedMonth = this.scopedMonth + 1
+        this.scopedDay = value
+        if (this.scopedMonth === 11) {
+          this.scopedMonth = 0
+        } else {
+          this.scopedMonth = this.scopedMonth + 1
+        }
         eventBus.$emit('update:month', this.scopedMonth)
-        eventBus.$emit('update:day', value)
+        eventBus.$emit('update:day', this.scopedDay)
       } else {
         this.scopedDay = value
-        eventBus.$emit('update:day', value)
+        eventBus.$emit('update:day', this.scopedDay)
       }
     }
   },

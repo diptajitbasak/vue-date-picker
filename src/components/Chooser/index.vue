@@ -3,7 +3,7 @@
     template(v-if="options.chooser.includes('day')")
       day(:month="time.month" :year="time.year" :day.sync="time.day")
     template(v-if="options.chooser.includes('month')")
-      month(:month.sync="time.month")
+      month(:month.sync="time.month" @update:month="time.month = $event")
     template(v-if="options.chooser.includes('year')")
       year(:year.sync="time.year")
     template(v-if="options.chooser.includes('hour')")

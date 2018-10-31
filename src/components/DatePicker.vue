@@ -45,17 +45,14 @@ export default {
       }
     }
   },
-  created() {
+  created () {
     eventBus.$on('update:day', (value) => {
-      console.log('day is',value)
       this.start.day = value
-    }),
+    })
     eventBus.$on('update:month', (value) => {
-      console.log('month is',value)
       this.start.month = value
-    }),
+    })
     eventBus.$on('update:year', (value) => {
-      console.log(value)
       this.start.year = value
     })
   },
