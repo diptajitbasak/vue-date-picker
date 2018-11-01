@@ -9,7 +9,8 @@ import { eventBus } from '../../main'
 
 export default {
   props: {
-    year: Number
+    year: Number,
+    first: Boolean
   },
   data () {
     return {
@@ -19,7 +20,11 @@ export default {
   methods: {
     setYear (value) {
       this.scopedYear = value
-      eventBus.$emit('update:year', this.scopedYear)
+      if (this.first) {
+        eventBus.$emit('update:year-1', this.scopedYear)
+      } else {
+        eventBus.$emit('update:year-2', this.scopedYear)
+      }
     }
   },
   mounted () {
@@ -29,7 +34,11 @@ export default {
       } else {
         this.scopedYear -= 1
       }
-      eventBus.$emit('update:year', this.scopedYear)
+      if (this.first) {
+        eventBus.$emit('update:year-1', this.scopedYear)
+      } else {
+        eventBus.$emit('update:year-2', this.scopedYear)
+      }
     })
   },
   destroyed () {

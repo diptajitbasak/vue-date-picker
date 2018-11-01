@@ -10,7 +10,8 @@ import { months } from '../constants'
 
 export default {
   props: {
-    month: Number
+    month: Number,
+    first: Boolean
   },
   data () {
     return {
@@ -21,7 +22,11 @@ export default {
   methods: {
     setMonth (value) {
       this.scopedMonth = value
-      eventBus.$emit('update:month', this.scopedMonth)
+      if (this.first) {
+        eventBus.$emit('update:month-1', this.scopedMonth)
+      } else {
+        eventBus.$emit('update:month-2', this.scopedMonth)
+      }
     }
   },
   mounted () {
@@ -31,7 +36,11 @@ export default {
       } else {
         this.scopedMonth = (this.scopedMonth + 11) % 12
       }
-      eventBus.$emit('update:month', this.scopedMonth)
+      if (this.first) {
+        eventBus.$emit('update:month-1', this.scopedMonth)
+      } else {
+        eventBus.$emit('update:month-2', this.scopedMonth)
+      }
     })
   },
   destroyed () {

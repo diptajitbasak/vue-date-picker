@@ -23,18 +23,26 @@ export default {
   props: {
     day: Number,
     month: Number,
-    year: Number
+    year: Number,
+    first: Boolean
   },
-  created() {
-    eventBus.$on('update:day', (value) => {
+  created () {
+    eventBus.$on('update:day-1', (value) => {
       this.scopedDay = value
-    }),
-    eventBus.$on('update:month', (value) => {
+    })
+    eventBus.$on('update:day-2', (value) => {
+      this.scopedDay = value
+    })
+    eventBus.$on('update:month-1', (value) => {
+      this.scopedMonth = value
+    })
+    eventBus.$on('update:month-2', (value) => {
       this.scopedMonth = value
     })
   },
   methods: {
     updateDay (value, week) {
+      console.log(this.first)
       if (week === 1 && value > 20) {
         this.scopedDay = value
         if (this.scopedMonth === 0) {
@@ -42,8 +50,13 @@ export default {
         } else {
           this.scopedMonth = this.scopedMonth - 1
         }
-        eventBus.$emit('update:day', this.scopedDay)
-        eventBus.$emit('update:month', this.scopedMonth)
+        if (this.first) {
+          eventBus.$emit('update:day-1', this.scopedDay)
+          eventBus.$emit('update:month-1', this.scopedMonth)
+        } else {
+          eventBus.$emit('update:day-2', this.scopedDay)
+          eventBus.$emit('update:month-2', this.scopedMonth)
+        }
       } else if ((week === 5 && value < 20) || (week === 6 && value < 20)) {
         this.scopedDay = value
         if (this.scopedMonth === 11) {
@@ -51,11 +64,20 @@ export default {
         } else {
           this.scopedMonth = this.scopedMonth + 1
         }
-        eventBus.$emit('update:month', this.scopedMonth)
-        eventBus.$emit('update:day', this.scopedDay)
+        if (this.first) {
+          eventBus.$emit('update:day-1', this.scopedDay)
+          eventBus.$emit('update:month-1', this.scopedMonth)
+        } else {
+          eventBus.$emit('update:day-2', this.scopedDay)
+          eventBus.$emit('update:month-2', this.scopedMonth)
+        }
       } else {
         this.scopedDay = value
-        eventBus.$emit('update:day', this.scopedDay)
+        if (this.first) {
+          eventBus.$emit('update:day-1', this.scopedDay)
+        } else {
+          eventBus.$emit('update:day-2', this.scopedDay)
+        }
       }
     }
   },

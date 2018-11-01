@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { eventBus } from '../main'
 import { getMonthCalendar } from './helper'
 
 export default {
@@ -23,7 +24,7 @@ export default {
   },
   methods: {
     setYesterday () {
-      // console.log(this.scopedTimeStart.day)
+      console.log(this.scopedTimeStart.day)
     },
     setTomorrow () {
       let daysInMonth = getMonthCalendar(this.scopedTimeStart.month, this.scopedTimeStart.year)
@@ -38,7 +39,7 @@ export default {
       }
       console.log(this.scopedTimeStart.month)
       console.log(this.scopedTimeStart.year)
-      this.$emit('update:month', this.scopedTimeStart.month)
+      eventBus.$emit('update:month-1', this.scopedTimeStart.month)
     }
   }
 }
@@ -49,7 +50,6 @@ export default {
   position: relative
   .dropdown
     position: absolute
-    // position: relative
     width: 100px
     background: red
 </style>

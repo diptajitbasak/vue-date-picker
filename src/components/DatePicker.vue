@@ -2,7 +2,7 @@
   .date-picker
     custom-input(class='input' :value="formattedValue" :label="options.label")
     quick-pick(class='quick-pick' v-if="options.quickPick" :timeStart="start" :timeEnd="end")
-    chooser(class='chooser-1' :options="options" :time="start")
+    chooser(class='chooser-1' :options="options" :time="start" :first="first")
     chooser(class='chooser-2' v-if="options.range" :options="options" :time="end")
 </template>
 
@@ -27,6 +27,7 @@ export default {
   },
   data () {
     return {
+      first: true,
       start: {
         day: now.getDate(),
         month: now.getMonth(),
@@ -46,14 +47,23 @@ export default {
     }
   },
   created () {
-    eventBus.$on('update:day', (value) => {
+    eventBus.$on('update:day-1', (value) => {
       this.start.day = value
     })
-    eventBus.$on('update:month', (value) => {
+    eventBus.$on('update:day-2', (value) => {
+      this.end.day = value
+    })
+    eventBus.$on('update:month-1', (value) => {
       this.start.month = value
     })
-    eventBus.$on('update:year', (value) => {
+    eventBus.$on('update:month-2', (value) => {
+      this.end.month = value
+    })
+    eventBus.$on('update:year-1', (value) => {
       this.start.year = value
+    })
+    eventBus.$on('update:year-2', (value) => {
+      this.end.year = value
     })
   },
   computed: {
