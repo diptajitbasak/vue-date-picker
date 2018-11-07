@@ -2,12 +2,13 @@
   div(class="icon" @click="openDropdown = !openDropdown") Q
     div(class="dropdown" v-if="openDropdown")
       div(@click="setLastMonth") Last Month
+      div(@click="setSixMonth") Last 6 Month
       div(@click="setYesterday") Yesterday
       div(@click="setTomorrow") Tomorrow
 </template>
 
 <script>
-import { eventBus } from '../main'
+// import { eventBus } from '../main'
 import { getMonthCalendar } from './helper'
 
 export default {
@@ -23,23 +24,57 @@ export default {
     }
   },
   methods: {
-    setYesterday () {
-      console.log(this.scopedTimeStart.day)
-    },
     setTomorrow () {
       let daysInMonth = getMonthCalendar(this.scopedTimeStart.month, this.scopedTimeStart.year)
-      console.log(daysInMonth)
+      let d = new Date().getDate()
+      function findTheDate (element) {
+        return element === d
+      }
+      let position = daysInMonth.findIndex(findTheDate)
+      if (daysInMonth[position] > daysInMonth[position + 1]) {
+        this.scopedTimeStart.month = this.scopedTimeStart.month + 1
+        this.scopedTimeStart.day = daysInMonth[position + 1]
+      } else {
+        this.scopedTimeStart.day = daysInMonth[position + 1]
+      }
+    },
+    setYesterday () {
+      let daysInMonth = getMonthCalendar(this.scopedTimeStart.month, this.scopedTimeStart.year)
+      let d = new Date().getDate()
+      function findTheDate (element) {
+        return element === d
+      }
+      let position = daysInMonth.findIndex(findTheDate)
+      if (daysInMonth[position] < daysInMonth[position - 1]) {
+        this.scopedTimeStart.month = this.scopedTimeStart.month - 1
+        this.scopedTimeStart.day = daysInMonth[position - 1]
+      } else {
+        this.scopedTimeStart.day = daysInMonth[position - 1]
+      }
     },
     setLastMonth () {
-      if (this.scopedTimeStart.month === 0) {
-        this.scopedTimeStart.month = 11
-        this.scopedTimeStart.year = this.scopedTimeStart.year - 1
-      } else {
-        this.scopedTimeStart.month = this.scopedTimeStart.month - 1
+      // if (this.scopedTimeStart.month === 0) {
+      //   this.scopedTimeStart.month = 11
+      //   this.scopedTimeStart.year = this.scopedTimeStart.year - 1
+      // } else {
+      //   this.scopedTimeStart.month = this.scopedTimeStart.month - 1
+      // }
+      // console.log(this.scopedTimeStart.month)
+      // console.log(this.scopedTimeStart.year)
+      // eventBus.$emit('update:month-1', this.scopedTimeStart.month)
+      let d = new Date().getMonth()
+      this.scopedTimeStart.month = d - 1
+    },
+    setSixMonth () {
+      let month = new Date().getMonth()
+      let lastSixMonth = [7, 8, 9, 10, 11, 12]
+      let firstSixMonth = [1, 2, 3, 4, 5, 6]
+      if (lastSixMonth.includes(month)) {
+        this.scopedTimeStart.month = (month - 6)
       }
-      console.log(this.scopedTimeStart.month)
-      console.log(this.scopedTimeStart.year)
-      eventBus.$emit('update:month-1', this.scopedTimeStart.month)
+      if (firstSixMonth.includes(month)) {
+        this.scopedTimeStart.month = (month + 6)
+      }
     }
   }
 }
