@@ -5,10 +5,10 @@
       div(@click="setSixMonth") Last 6 Month
       div(@click="setYesterday") Yesterday
       div(@click="setTomorrow") Tomorrow
+      div(@click="setLastHour") Last Hour
 </template>
 
 <script>
-// import { eventBus } from '../main'
 import { getMonthCalendar } from './helper'
 
 export default {
@@ -26,9 +26,9 @@ export default {
   methods: {
     setTomorrow () {
       let daysInMonth = getMonthCalendar(this.scopedTimeStart.month, this.scopedTimeStart.year)
-      let d = new Date().getDate()
+      let day = new Date().getDate()
       function findTheDate (element) {
-        return element === d
+        return element === day
       }
       let position = daysInMonth.findIndex(findTheDate)
       if (daysInMonth[position] > daysInMonth[position + 1]) {
@@ -40,9 +40,9 @@ export default {
     },
     setYesterday () {
       let daysInMonth = getMonthCalendar(this.scopedTimeStart.month, this.scopedTimeStart.year)
-      let d = new Date().getDate()
+      let day = new Date().getDate()
       function findTheDate (element) {
-        return element === d
+        return element === day
       }
       let position = daysInMonth.findIndex(findTheDate)
       if (daysInMonth[position] < daysInMonth[position - 1]) {
@@ -53,17 +53,8 @@ export default {
       }
     },
     setLastMonth () {
-      // if (this.scopedTimeStart.month === 0) {
-      //   this.scopedTimeStart.month = 11
-      //   this.scopedTimeStart.year = this.scopedTimeStart.year - 1
-      // } else {
-      //   this.scopedTimeStart.month = this.scopedTimeStart.month - 1
-      // }
-      // console.log(this.scopedTimeStart.month)
-      // console.log(this.scopedTimeStart.year)
-      // eventBus.$emit('update:month-1', this.scopedTimeStart.month)
-      let d = new Date().getMonth()
-      this.scopedTimeStart.month = d - 1
+      let month = new Date().getMonth()
+      this.scopedTimeStart.month = month - 1
     },
     setSixMonth () {
       let month = new Date().getMonth()
@@ -75,6 +66,10 @@ export default {
       if (firstSixMonth.includes(month)) {
         this.scopedTimeStart.month = (month + 6)
       }
+    },
+    setLastHour () {
+      let hour = new Date().getHours()
+      this.scopedTimeStart.hour = hour - 1
     }
   }
 }
